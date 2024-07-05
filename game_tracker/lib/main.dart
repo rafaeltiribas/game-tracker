@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Alerta Dengue',
+      title: 'Game Tracker',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Color.fromRGBO(16, 137, 218, 0)),
         useMaterial3: true,
