@@ -1,12 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:game_tracker/controller/login_controller.dart';
 import 'package:game_tracker/pages/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Signup extends StatefulWidget {
+enum SignupStatus { notSignup, signUp }
+
+class SignupPage extends StatefulWidget {
   @override
-  _Signup createState() => _Signup();
+  _SignupPageState createState() => _SignupPageState();
 }
 
- class _Signup extends State<Signup>{
+ class _SignupPageState extends State<SignupPage>{
+  SignupStatus _signupStatus = SignupStatus.notSignup;
+  final _formKey = GlobalKey<FormState>();
+  String _name = "", _email = "", _password = "";
+  late LoginController controller;
+  var value;
+
+  _SignupPageState (){
+    this.controller = LoginController();
+  }
+
+  savePref(int value, String name, String email, String pass) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    setState(() {
+      preferences.setInt("value", value);
+      preferences.setString("name", name);
+      preferences.setString("email", email);
+      preferences.setString("pass", pass);
+    });
+  }
 
   @override
   Widget build(BuildContext context){
@@ -38,7 +62,9 @@ class Signup extends StatefulWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _inputField("username"),
+            _inputField("name"),
+            const SizedBox(height: 20),
+            _inputField("email"),
             const SizedBox(height: 20),
             _inputField("password"),
             const SizedBox(height: 20),
