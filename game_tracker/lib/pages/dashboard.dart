@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget{
+  final VoidCallback signOut;
+  Dashboard(this.signOut);
+
   @override
-  _Dashboard createState() => _Dashboard();
+  State<Dashboard> createState() => _Dashboard();
 }
 
 class _Dashboard extends State<Dashboard>{
+
+  signOut() {
+    setState(() {
+      widget.signOut();
+    });
+  }
+
+  @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar: _buildAppBar(),
       body: _buildBody(),
     );
   }
+
   _buildAppBar() {
     return AppBar(
       title: const Text(
@@ -23,9 +35,18 @@ class _Dashboard extends State<Dashboard>{
           fontWeight: FontWeight.bold,
         ),
       ),
+      actions: <Widget>[
+        IconButton(
+          onPressed: () {
+            signOut();
+          },
+          icon: Icon(Icons.lock_open),
+        )
+      ],
       centerTitle: true,
     );
   }
+
   _buildBody() {
     return Padding(
       padding: const EdgeInsets.all(60.0),

@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
         );
         break;
       case LoginStatus.signIn:
-        currentWidget = Dashboard();
+        currentWidget = Dashboard(signOut);
         break;
     }
 
@@ -223,7 +223,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Dashboard()),
+            MaterialPageRoute(builder: (context) => Dashboard(signOut)),
           );
         },
         style: ElevatedButton.styleFrom(
