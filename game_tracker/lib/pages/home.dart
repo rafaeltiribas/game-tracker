@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:game_tracker/pages/dashboard.dart';
 import 'package:game_tracker/pages/signup.dart';
