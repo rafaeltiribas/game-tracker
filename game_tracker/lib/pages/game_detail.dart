@@ -91,8 +91,10 @@ class _GameDetailState extends State<GameDetail> {
                   ),
                 ),
                 // Add more fields if needed
-                SizedBox(height: 25),
+                SizedBox(height: 105),
                 _createReviewBtn(),
+                SizedBox(height: 10),
+                _editBtn(),
               ],
             ),
           ),
@@ -116,6 +118,28 @@ class _GameDetailState extends State<GameDetail> {
         width: double.infinity,
         child: Text(
           "Review",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20, fontFamily: 'Lexend', color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  Widget _editBtn() {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ReviewPage(signOut: signOut, game: widget.game, userId: widget.userId)),
+          );
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color.fromARGB(255, 109, 49, 237),
+      ),
+      child: const SizedBox(
+        width: double.infinity,
+        child: Text(
+          "Edit",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 20, fontFamily: 'Lexend', color: Colors.white),
         ),

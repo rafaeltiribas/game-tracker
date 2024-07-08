@@ -125,6 +125,8 @@ class _Dashboard extends State<Dashboard>{
             _createBtn(),
             const SizedBox(height: 20),
             _removeBtn(),
+            const SizedBox(height: 20),
+            _reviewsBtn(),
           ],),
       ),
     );
@@ -176,6 +178,24 @@ class _Dashboard extends State<Dashboard>{
           width: double.infinity,
           child: Text(
             "Remove Game",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20, fontFamily: 'Lexend', color: Colors.white),
+          ),
+        ));
+  }
+
+  Widget _reviewsBtn() {
+    return ElevatedButton(
+        onPressed: () {
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color.fromARGB(255, 109, 49, 237),
+        ),
+        child: const SizedBox(
+          width: double.infinity,
+          child: Text(
+            "Recent Reviews",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20, fontFamily: 'Lexend', color: Colors.white),
