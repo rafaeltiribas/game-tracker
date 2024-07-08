@@ -3,6 +3,7 @@ import 'package:game_tracker/controllers/game_controller.dart';
 import 'package:game_tracker/models/game.dart';
 import 'package:game_tracker/pages/create_game.dart';
 import 'package:game_tracker/pages/remove_game.dart';
+import 'package:game_tracker/pages/game_detail.dart';
 
 class Dashboard extends StatefulWidget{
   final VoidCallback signOut;
@@ -96,21 +97,26 @@ class _Dashboard extends State<Dashboard>{
             Expanded(
               child: ListView.builder(
                 itemCount: userGames.length,
-                itemBuilder: (context, index){
-                  return ListTile(
-                      title: Text(
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      _navigateToGameDetails(userGames[index]);
+                    },
+                    child: ListTile(
+                         title: Text(
                         userGames[index].name,
                         style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
-                          fontFamily: 'Lexend',
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                            fontFamily: 'Lexend',
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
+                        subtitle: Text(
+                          'Rating: ' +
+                          userGames[index].id.toString()
                       ),
-                      subtitle: Text(
-                        'id: ' +
-                        userGames[index].id.toString()
-                      ),
+                    ),
                   );
                 },
               ),
@@ -120,6 +126,15 @@ class _Dashboard extends State<Dashboard>{
             const SizedBox(height: 20),
             _removeBtn(),
           ],),
+      ),
+    );
+  }
+
+  void _navigateToGameDetails(Game game) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => GameDetail(signOut: signOut, game: game, userId: widget.userId),
       ),
     );
   }
