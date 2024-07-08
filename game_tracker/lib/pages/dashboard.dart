@@ -118,8 +118,6 @@ class _Dashboard extends State<Dashboard>{
             const SizedBox(height: 20),
             _createBtn(),
             const SizedBox(height: 20),
-            _editBtn(),
-            const SizedBox(height: 20),
             _removeBtn(),
           ],),
       ),
@@ -141,28 +139,6 @@ class _Dashboard extends State<Dashboard>{
           width: double.infinity,
           child: Text(
             "Create Game",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20, fontFamily: 'Lexend', color: Colors.white),
-          ),
-        ));
-  }
-
-  Widget _editBtn() {
-    return ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Dashboard(signOut: signOut, userId: 0)),
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Color.fromARGB(255, 109, 49, 237),
-        ),
-        child: const SizedBox(
-          width: double.infinity,
-          child: Text(
-            "Edit Game",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20, fontFamily: 'Lexend', color: Colors.white),
