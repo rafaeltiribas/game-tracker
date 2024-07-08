@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_tracker/controllers/game_controller.dart';
 import 'package:game_tracker/models/game.dart';
+import 'package:game_tracker/pages/create_game.dart';
 
 class Dashboard extends StatefulWidget{
   final VoidCallback signOut;
@@ -56,6 +57,10 @@ class _Dashboard extends State<Dashboard>{
       ),
       actions: <Widget>[
         IconButton(
+          onPressed: _refreshGames,
+          icon: Icon(Icons.refresh),
+        ),
+        IconButton(
           onPressed: () {
             signOut();
           },
@@ -64,6 +69,10 @@ class _Dashboard extends State<Dashboard>{
       ],
       centerTitle: true,
     );
+  }
+
+  void _refreshGames() {
+    _loadUserGames();
   }
 
   _buildBody() {
@@ -109,7 +118,7 @@ class _Dashboard extends State<Dashboard>{
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Dashboard(signOut: signOut, userId: 0)),
+            MaterialPageRoute(builder: (context) => CreateGame(signOut: signOut, userId: widget.userId)),
           );
         },
         style: ElevatedButton.styleFrom(
