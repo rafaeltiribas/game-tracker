@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:game_tracker/controller/login_controller.dart';
+import 'package:game_tracker/controllers/login_controller.dart';
 import 'package:game_tracker/models/user.dart';
 import 'package:game_tracker/pages/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';

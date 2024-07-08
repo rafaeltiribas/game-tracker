@@ -4,15 +4,15 @@ import '../models/game_genre.dart';
 class GameGenreController {
   DatabaseHelper con = DatabaseHelper();
 
-  Future<int> saveGameGenre(GameGenre game_genre) async {
+  Future<int> saveGameGenre(GameGenre gameGenre) async {
     var db = await con.db;
-    int res = await db.insert('game_genre', game_genre.toMap());
+    int res = await db.insert('game_genre', gameGenre.toMap());
     return res;
   }
 
-  Future<int> deleteGameGenre(GameGenre game_genre) async {
+  Future<int> deleteGameGenre(GameGenre gameGenre) async {
     var db = await con.db;
-    int res = await db.delete("game_genre", where: "id = ?", whereArgs: [game_genre.id]);
+    int res = await db.delete("game_genre", where: "id = ?", whereArgs: [gameGenre.id]);
     return res;
   }
 

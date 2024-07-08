@@ -1,18 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:game_tracker/controllers/game_controller.dart';
+import 'package:game_tracker/models/game.dart';
 
 class Dashboard extends StatefulWidget{
   final VoidCallback signOut;
-  Dashboard(this.signOut);
+  final int userId;
+
+  Dashboard({required this.signOut, required this.userId});
 
   @override
   State<Dashboard> createState() => _Dashboard();
 }
 
 class _Dashboard extends State<Dashboard>{
+  final GameController gameController = GameController();
+  List<Game> userGames = [];
+
+  @override
+  void initState(){
+    super.initState();
+    _loadUserGames();
+  }
 
   signOut() {
     setState(() {
       widget.signOut();
+    });
+  }
+
+  Future<void> _loadUserGames() async {
+    var games = await gameController.getGamesByUserId(widget.userId);
+    setState(() {
+      userGames = games;
     });
   }
 
@@ -55,16 +74,99 @@ class _Dashboard extends State<Dashboard>{
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-                'Data',
+                'Games',
                 style: TextStyle(
                   color: Color.fromARGB(255, 0, 0, 0),
                   fontFamily: 'Lexend',
-                  fontSize: 22,
+                  fontSize: 17,
                   fontWeight: FontWeight.bold,
                 ),
             ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: userGames.length,
+                itemBuilder: (context, index){
+                  return ListTile(
+                      title: Text(userGames[index].name),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            _createBtn(),
+            const SizedBox(height: 20),
+            _editBtn(),
+            const SizedBox(height: 20),
+            _removeBtn(),
           ],),
       ),
     );
+  }
+
+  Widget _createBtn() {
+    return ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Dashboard(signOut: signOut, userId: 0)),
+          );
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color.fromARGB(255, 109, 49, 237),
+        ),
+        child: const SizedBox(
+          width: double.infinity,
+          child: Text(
+            "Create Game",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20, fontFamily: 'Lexend', color: Colors.white),
+          ),
+        ));
+  }
+
+  Widget _editBtn() {
+    return ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Dashboard(signOut: signOut, userId: 0)),
+          );
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color.fromARGB(255, 109, 49, 237),
+        ),
+        child: const SizedBox(
+          width: double.infinity,
+          child: Text(
+            "Edit Game",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20, fontFamily: 'Lexend', color: Colors.white),
+          ),
+        ));
+  }
+
+  Widget _removeBtn() {
+    return ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Dashboard(signOut: signOut, userId: 0)),
+          );
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color.fromARGB(255, 109, 49, 237),
+        ),
+        child: const SizedBox(
+          width: double.infinity,
+          child: Text(
+            "Remove Game",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20, fontFamily: 'Lexend', color: Colors.white),
+          ),
+        ));
   }
 }

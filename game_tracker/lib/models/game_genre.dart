@@ -1,23 +1,23 @@
 class GameGenre {
   final int? id;
-  final int game_id;
-  final int genre_id;
+  final int gameId;
+  final int genreId;
 
-  GameGenre({this.id, required this.game_id, required this.genre_id});
+  GameGenre({this.id, required this.gameId, required this.genreId});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       "id": id,
-      "game_id": game_id,
-      "genre_id": genre_id,
+      "game_id": gameId,
+      "genre_id": genreId,
     };
   }
 
   factory GameGenre.fromMap(Map<String, dynamic> map) {
-    return Genre(
+    return GameGenre(
       id: map["id"],
-      game_id: map["game_id"],
-      genre_id: map["genre_id"],
+      gameId: map["game_id"],
+      genreId: map["genre_id"],
     );
   }
 }

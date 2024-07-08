@@ -33,4 +33,12 @@ class GameController {
     List<Game> list = res.isNotEmpty ? res.map((c) => Game.fromMap(c)).toList() : [];
     return list;
   }
+
+  Future<List<Game>> getGamesByUserId(int userId) async {
+    var db = await con.db;
+    var res = await db.query("game", where: "user_id = ?", whereArgs: [userId]);
+
+    List<Game> list = res.isNotEmpty ? res.map((c) => Game.fromMap(c)).toList() : [];
+    return list;
+  }
 }

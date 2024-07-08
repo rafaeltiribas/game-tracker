@@ -4,7 +4,7 @@ import 'package:game_tracker/pages/dashboard.dart';
 import 'package:game_tracker/pages/signup.dart';
 import 'package:game_tracker/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:game_tracker/controller/login_controller.dart';
+import 'package:game_tracker/controllers/login_controller.dart';
 
 enum LoginStatus { notSignin, signIn }
 
@@ -21,16 +21,18 @@ class _HomePageState extends State<HomePage> {
   String _email = "", _password = "";
   late LoginController controller;
   var value;
+  int userId = 0;  // Inicializando userId com 0
 
   _HomePageState() {
     this.controller = LoginController();
   }
 
-  savePref(int value, String email, String pass) async {
+  savePref(int value, int userId, String email, String pass) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     setState(() {
       preferences.setInt("value", value);
+      preferences.setInt("userId", userId);
       preferences.setString("email", email);
       preferences.setString("pass", pass);
     });
@@ -45,9 +47,10 @@ class _HomePageState extends State<HomePage> {
       try {
         User user = await controller.getLogin(_email, _password);
         if (user.id != -1) {
-          savePref(1, user.email, user.password);
+          savePref(1, user.id!, user.email, user.password);
           setState(() {
             _loginStatus = LoginStatus.signIn;
+            userId = user.id!; // Atribuição de userId com user.id
           });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -67,6 +70,7 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       preferences.setInt("value", 0);
+      preferences.setInt("userId", 0); // Definindo userId como 0 ao sair
       _loginStatus = LoginStatus.notSignin;
     });
   }
@@ -82,7 +86,7 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       value = preferences.getInt("value");
-
+      userId = preferences.getInt("userId") ?? 0; // Definindo padrão 0
       _loginStatus = value == 1 ? LoginStatus.signIn : LoginStatus.notSignin;
     });
   }
@@ -99,14 +103,14 @@ class _HomePageState extends State<HomePage> {
         );
         break;
       case LoginStatus.signIn:
-        currentWidget = Dashboard(signOut);
+        currentWidget = Dashboard(signOut: signOut, userId: userId);
         break;
     }
 
     return currentWidget;
   }
 
-  _buildAppBar() {
+  AppBar _buildAppBar() {
     return AppBar(
       title: const Text(
         'Game Tracker',
@@ -121,7 +125,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildBody() {
+  Widget _buildBody() {
     return Padding(
       padding: const EdgeInsets.all(60.0),
       child: Center(
@@ -222,7 +226,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Dashboard(signOut)),
+            MaterialPageRoute(builder: (context) => Dashboard(signOut: signOut, userId: 0)),
           );
         },
         style: ElevatedButton.styleFrom(
