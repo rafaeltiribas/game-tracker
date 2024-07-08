@@ -16,6 +16,12 @@ class GameController {
     return res;
   }
 
+  Future<int> deleteGameById(int game_id) async {
+    var db = await con.db;
+    int res = await db.delete("game", where: "id = ?", whereArgs: [game_id]);
+    return res;
+  }
+
   Future<Game?> getGameById(int id) async {
     var db = await con.db;
     var res = await db.query("game", where: "id = ?", whereArgs: [id]);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:game_tracker/controllers/game_controller.dart';
 import 'package:game_tracker/models/game.dart';
 import 'package:game_tracker/pages/create_game.dart';
+import 'package:game_tracker/pages/remove_game.dart';
 
 class Dashboard extends StatefulWidget{
   final VoidCallback signOut;
@@ -87,7 +88,7 @@ class _Dashboard extends State<Dashboard>{
                 style: TextStyle(
                   color: Color.fromARGB(255, 0, 0, 0),
                   fontFamily: 'Lexend',
-                  fontSize: 17,
+                  fontSize: 27,
                   fontWeight: FontWeight.bold,
                 ),
             ),
@@ -97,7 +98,19 @@ class _Dashboard extends State<Dashboard>{
                 itemCount: userGames.length,
                 itemBuilder: (context, index){
                   return ListTile(
-                      title: Text(userGames[index].name),
+                      title: Text(
+                        userGames[index].name,
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontFamily: 'Lexend',
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        'id: ' +
+                        userGames[index].id.toString()
+                      ),
                   );
                 },
               ),
@@ -162,7 +175,7 @@ class _Dashboard extends State<Dashboard>{
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Dashboard(signOut: signOut, userId: 0)),
+            MaterialPageRoute(builder: (context) => RemoveGame(signOut)),
           );
         },
         style: ElevatedButton.styleFrom(
