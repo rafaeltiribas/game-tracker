@@ -32,6 +32,16 @@ class GameController {
     return null;
   }
 
+  Future<Game?> getGameByName(String name) async {
+    var db = await con.db;
+    var res = await db.query("game", where: "name = ?", whereArgs: [name]);
+
+    if (res.isNotEmpty) {
+      return Game.fromMap(res.first);
+    }
+    return null;
+  }
+
   Future<List<Game>> getAllGames() async {
     var db = await con.db;
     var res = await db.query("game");

@@ -33,4 +33,31 @@ class ReviewController {
     List<Review> list = res.isNotEmpty ? res.map((c) => Review.fromMap(c)).toList() : [];
     return list;
   }
+
+  Future<List<Review>> getRecentReviews() async {
+    var db = await con.db;
+    String sevenDaysAgo = DateTime.now().subtract(Duration(days: 7)).toIso8601String();
+    var res = await db.query(
+      "review",
+      where: "date >= ?",
+      whereArgs: [sevenDaysAgo],
+    );
+
+    List<Review> list = res.isNotEmpty ? res.map((c) => Review.fromMap(c)).toList() : [];
+    return list;
+  }
+
+  Future<double> getGameScoreAvg(int gameId) async {
+    var db = await con.db;
+    var result = await db.rawQuery(
+      'SELECT AVG(score) as avg_score FROM review WHERE game_id = ?',
+      [gameId]
+    );
+
+    if (result.isNotEmpty && result.first['avg_score'] != null) {
+      return result.first['avg_score'] as double;
+    } else {
+      return 0.0;
+    }
+  }
 }
